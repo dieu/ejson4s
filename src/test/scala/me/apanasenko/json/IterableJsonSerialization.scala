@@ -3,7 +3,7 @@ package me.apanasenko.json
 import deserializer.JsonDeserializer
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
-import parser.JsonSerializer
+import serializer.JsonSerializer
 
 /**
  * @author apanasenko
@@ -14,8 +14,8 @@ class IterableJsonSerialization extends Spec with ShouldMatchers {
     val serializer = new JsonSerializer()
 
     it("simple string list serialization") {
-      val list = List("1")
-      serializer.toString(list) should equal("['1']")
+      serializer.toString(List("1")) should equal("['1']")
+      serializer.toString(List()) should equal("[]")
     }
 
     it("string list serialization") {

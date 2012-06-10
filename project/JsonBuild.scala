@@ -16,7 +16,7 @@ object JsonBuild extends Build {
   )
 
   lazy val root = Project(
-    id = "json",
+    id = "simple-json",
     base = file("."),
     settings = defaultSettings ++ Seq(
       libraryDependencies ++= Seq(scalaTest, scalap)

@@ -12,21 +12,20 @@ object ClazzUtils {
   else
     classNameValues(any)
   
-  def classNameValues(any: AnyRef) = classFields(any).map{field => (field.getName, field.get(any))}
+  def classNameValues(any: AnyRef) = classFields(any, numConstructorParams(any)).
+    map{field => (field.getName, field.get(any))}
   
   def caseNameValues(product: Product) = {
-    val filedTypes = product.productIterator.map(_.getClass)
-    classFields(product, (field) => filedTypes.contains(field.getType)).map{field => (field.getName, field.get(product))}
-  }    
+    classFields(product, product.productArity).map{field => (field.getName, field.get(product))}
+  }
   
-  def classFields(any: AnyRef, filter: Field => Boolean = (_) => true) = any.getClass.getDeclaredFields.toSeq.
+  def classFields(any: AnyRef, take: Int) = any.getClass.getDeclaredFields.toSeq.
     filterNot(_.isSynthetic).
-    filter(filter).
-    take(numConstructorParams(any)).
+    take(take).
     map { field =>
       field.setAccessible(true)
       field
     }
-  
+
   private def numConstructorParams(a: AnyRef) = a.getClass.getConstructors()(0).getParameterTypes.size
 }

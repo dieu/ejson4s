@@ -3,7 +3,7 @@ package me.apanasenko.json
 import hint.FullTypeHints
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
-import parser.JsonSerializer
+import serializer.JsonSerializer
 
 /**
  * @author apanasenko
