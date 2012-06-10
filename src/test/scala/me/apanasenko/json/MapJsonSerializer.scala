@@ -1,5 +1,6 @@
 package me.apanasenko.json
 
+import deserializer.JsonDeserializer
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
 import parser.JsonSerializer
@@ -29,6 +30,21 @@ class MapJsonSerializer extends Spec with ShouldMatchers {
     it("string, list[string] map serialization") {
       val map = Map("test" -> List("test"))
       serializer.toString(map) should equal("{'test':['test']}")
+    }
+  }
+
+  describe("Json to Map deserialization") {
+    val deserializer = new JsonDeserializer()
+
+    it("simple json deserialization") {
+      deserializer.asObject("{'1':1}") should equal(Map("1" -> 1))
+      deserializer.asObject("{'1':1,'2':2}") should equal(Map("1" -> 1, "2" -> 2))
+    }
+
+    it("complex json deserialization") {
+      deserializer.asObject("{'1':1,'2':2,'3':[1]}") should equal(Map("1" -> 1, "2" -> 2, "3" -> List(1)))
+      deserializer.asObject("{'1':1,'2':2,'3':[1,2]}") should equal(Map("1" -> 1, "2" -> 2, "3" -> List(1,2)))
+      deserializer.asObject("{'1':1,'2':2,'3':[1,2,'3']}") should equal(Map("1" -> 1, "2" -> 2, "3" -> List(1,2,"3")))
     }
   }
 }
