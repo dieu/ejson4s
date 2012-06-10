@@ -1,0 +1,39 @@
+# Build artefacts
+bin
+out
+
+# Idea project files
+.idea
+*.iml
+*.ipr
+*.iws
+
+# Eclipse project files
+.settings
+.project
+.classpath
+
+# Other
+.gradle
+.scala_dependencies
+target
+.DS_Store
+logs
+project/project
+project/target
+target
+tmp
+/ui/dist
+
+
+.idea/
+*.iml
+*.ipr
+*.iws
+*.ids
+target/
+.settings/
+.project
+.classpath
+/make.sh
+.DS_Store
