@@ -27,5 +27,5 @@ object ClazzUtils {
       field
     }
 
-  private def numConstructorParams(a: AnyRef) = a.getClass.getConstructors()(0).getParameterTypes.size
+  private def numConstructorParams(a: AnyRef) = a.getClass.getConstructors().maxBy(_.getParameterTypes.size).getParameterTypes.size
 }

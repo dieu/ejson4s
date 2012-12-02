@@ -30,10 +30,10 @@ class CaseClassJsonSerialization extends Spec with ShouldMatchers {
     case class InnerClass(test: String = "value")
 
     it("simple case class serialization") {
-      serializer.toString(Simple()) should equal("{'_type':'me.apanasenko.json.Simple','test':'value'}")
-      serializer.toString(new Simple()) should equal("{'_type':'me.apanasenko.json.Simple','test':'value'}")
-      serializer.toString(Simple("value2")) should equal("{'_type':'me.apanasenko.json.Simple','test':'value2'}")
-      serializer.toString(new Simple("value2")) should equal("{'_type':'me.apanasenko.json.Simple','test':'value2'}")
+      serializer.toString(Simple()) should equal("{'_type':'%s','test':'value'}".format(simpleName))
+      serializer.toString(new Simple()) should equal("{'_type':'%s','test':'value'}".format(simpleName))
+      serializer.toString(Simple("value2")) should equal("{'_type':'%s','test':'value2'}".format(simpleName))
+      serializer.toString(new Simple("value2")) should equal("{'_type':'%s','test':'value2'}".format(simpleName))
     }
 
     it("inner case class serialization") {
