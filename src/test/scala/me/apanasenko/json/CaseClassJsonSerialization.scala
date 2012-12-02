@@ -53,6 +53,9 @@ class CaseClassJsonSerialization extends Spec with ShouldMatchers {
     val deserializer = new JsonDeserializer()
     val serializer = new JsonSerializer()
 
+    val fullyComplex = ComplexClass("test", Some("1"), List(Simple(), Simple()), Map("1" -> Simple(), "2" -> List("1", "2")))
+    val fullyComplexWithNone = ComplexClass("test", None, List(Simple(), Simple()), Map("1" -> Simple(), "2" -> List("1", "2")))
+
     case class InnerClass(test: String = "value")
 
     it("simple case class deserialization") {
@@ -69,11 +72,16 @@ class CaseClassJsonSerialization extends Spec with ShouldMatchers {
       deserializer.asObject(serializer.toString(ComplexClass("test"))) should equal(ComplexClass("test"))
     }
 
+    it("fully complex case class deserialization") {
+      deserializer.asObject(serializer.toString(fullyComplex)) should equal(fullyComplex)
+    }
+
     it("complex case class with ignore None deserialization") {
-      val json = new JsonSerializer(typeHints = new FullTypeHints() {
+      val typeHints = new FullTypeHints() {
         override def isIgnoreNone = true
-      }).toString(ComplexClass("test"))
-      deserializer.asObject(json) should equal(ComplexClass("test"))
+      }
+      val json = new JsonSerializer(typeHints = typeHints).toString(fullyComplexWithNone)
+      new JsonDeserializer(typeHints = typeHints).asObject(json) should equal(fullyComplexWithNone)
     }
 
     it("strong case class deserialization") {

@@ -4,42 +4,49 @@
 
 import sbt._
 import Keys._
-import Reference._
 
 object JsonBuild extends Build {
-  val JsonVersion = "0.1-SNAPSHOT"
+  import Utils._
+
+  lazy val root = project(".")
+    .libraryDependencies(Dependencies.scalap)
 
   lazy val buildSettings = Seq(
     organization := "me.apanasenko.json",
-    version := JsonVersion,
-    scalaVersion := "2.9.1"
+    version := "0.1",
+    scalaVersion := "2.9.2",
+
+    scalacOptions := Seq("-deprecation", "-unchecked", "-explaintypes"),
+
+    libraryDependencies ++= Dependencies.test
   )
 
-  lazy val root = Project(
-    id = "simple-json",
-    base = file("."),
-    settings = defaultSettings ++ Seq(
-      libraryDependencies ++= Seq(scalaTest, scalap)
+  def commonSettings = Defaults.defaultSettings ++ buildSettings
+
+  object Dependencies {
+    val scalap = Seq(
+      "org.scala-lang" % "scalap" % Versions.scalap
     )
-  )
 
-  val scalaTest = "org.scalatest" %% "scalatest" % "1.6.1" % "test"
-  val scalap = "org.scala-lang" % "scalap" % "2.9.1"
+    val test = Seq(
+      "org.scalatest" %% "scalatest" % Versions.scalaTest % "test"
+    )
+  }
 
-  lazy val defaultSettings = genericSettings ++ buildSettings
+  object Versions {
+    val scalap = "2.9.2"
+    val scalaTest = "1.6.1"
+  }
 
-  lazy val genericSettings = Defaults.defaultSettings ++ Seq(
-    externalResolvers <<= resolvers map { rs =>
-      Resolver.withDefaultResolvers(rs, mavenCentral = true, scalaTools = false)
-    },
 
-//    testListeners <<= target.map(t => Seq(new eu.henkelmann.sbt.JUnitXmlTestsListener(t.getAbsolutePath, ConsoleLogger()))),
+  object Utils {
+    implicit def richProject(p: Project) = new {
+      def libraryDependencies(d: Seq[ModuleID]): Project = p.settings(Keys.libraryDependencies ++= d)
+    }
 
-    // compile options
-    scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked") ++ (
-      if (true || (System getProperty "java.runtime.version" startsWith "1.7")) Seq() else Seq("-optimize")),
-    javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
-
-    ivyLoggingLevel in ThisBuild := UpdateLogging.Quiet
-  )
+    def project(path: String) = Project(
+      id = if (path == ".") "root" else path.replace('/', '-'),
+      base = file(path),
+      settings = commonSettings)
+  }
 }
