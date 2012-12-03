@@ -1,7 +1,6 @@
 package me.apanasenko.json
 
 import deserializer.JsonDeserializer
-import hint.FullTypeHints
 import org.scalatest.matchers.ShouldMatchers
 import serializer.JsonSerializer
 import org.scalatest.Spec
@@ -74,14 +73,6 @@ class CaseClassJsonSerialization extends Spec with ShouldMatchers {
 
     it("fully complex case class deserialization") {
       deserializer.asObject(serializer.toString(fullyComplex)) should equal(fullyComplex)
-    }
-
-    it("complex case class with ignore None deserialization") {
-      val typeHints = new FullTypeHints() {
-        override def isIgnoreNone = true
-      }
-      val json = new JsonSerializer(typeHints = typeHints).toString(fullyComplexWithNone)
-      new JsonDeserializer(typeHints = typeHints).asObject(json) should equal(fullyComplexWithNone)
     }
 
     it("strong case class deserialization") {
