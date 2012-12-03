@@ -15,6 +15,7 @@ object JsonBuild extends Build {
     organization := "me.apanasenko.ejson4s",
     version := "0.1-SNAPSHOT",
     scalaVersion := "2.9.2",
+    crossScalaVersions := Seq("2.9.1", "2.9.2"),
 
     scalacOptions := Seq("-deprecation", "-unchecked", "-explaintypes"),
 
@@ -36,9 +37,7 @@ object JsonBuild extends Build {
   def commonSettings = Defaults.defaultSettings ++ buildSettings
 
   object Dependencies {
-    val scalap = Seq(
-      "org.scala-lang" % "scalap" % Versions.scalap
-    )
+    val scalap = scalaVersion("org.scala-lang" % "scalap" % _)
 
     val test = Seq(
       "org.scalatest" %% "scalatest" % Versions.scalaTest % "test"
@@ -46,7 +45,6 @@ object JsonBuild extends Build {
   }
 
   object Versions {
-    val scalap = "2.9.2"
     val scalaTest = "1.6.1"
   }
 
@@ -54,6 +52,8 @@ object JsonBuild extends Build {
   object Utils {
     implicit def richProject(p: Project) = new {
       def libraryDependencies(d: Seq[ModuleID]): Project = p.settings(Keys.libraryDependencies ++= d)
+
+      def libraryDependencies(d: sbt.Project.Initialize[ModuleID]): Project = p.settings(Keys.libraryDependencies <+= d)
     }
 
     def project(path: String) = Project(
