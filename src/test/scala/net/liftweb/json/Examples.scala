@@ -19,8 +19,8 @@ package json
 
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
-import me.apanasenko.json.serializer.JsonSerializer
-import me.apanasenko.json.deserializer.JsonDeserializer
+import me.apanasenko.ejson4s.serializer.JsonSerializer
+import me.apanasenko.ejson4s.deserializer.JsonDeserializer
 
 class Examples extends Spec with ShouldMatchers {
   val serializer = new JsonSerializer()

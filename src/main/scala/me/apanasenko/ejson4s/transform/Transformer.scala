@@ -1,4 +1,4 @@
-package me.apanasenko.json.transform
+package me.apanasenko.ejson4s.transform
 
 import scala.collection.mutable.{Map => MMap, Set => MSet, Seq => MSeq, IndexedSeq => MIndexedSeq}
 import scala.collection.mutable.{Buffer, ArrayBuffer, LinkedList, DoubleLinkedList}

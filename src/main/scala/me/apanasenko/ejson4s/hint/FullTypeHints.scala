@@ -1,6 +1,6 @@
-package me.apanasenko.json.hint
+package me.apanasenko.ejson4s.hint
 
-import me.apanasenko.json.TypeHints
+import me.apanasenko.ejson4s.TypeHints
 
 /**
  * @author apanasenko

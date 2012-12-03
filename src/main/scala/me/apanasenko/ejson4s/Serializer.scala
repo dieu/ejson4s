@@ -1,4 +1,4 @@
-package me.apanasenko.json
+package me.apanasenko.ejson4s
 
 
 /**

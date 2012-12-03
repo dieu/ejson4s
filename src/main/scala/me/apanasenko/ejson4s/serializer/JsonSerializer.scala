@@ -1,10 +1,10 @@
-package me.apanasenko.json.serializer
+package me.apanasenko.ejson4s.serializer
 
 import java.lang.StringBuilder
 import collection.{JavaConverters, Map, Iterable}
-import me.apanasenko.json.{TypeHints, Serializer}
-import me.apanasenko.json.hint.FullTypeHints
-import me.apanasenko.json.utils.ClazzUtils
+import me.apanasenko.ejson4s.{TypeHints, Serializer}
+import me.apanasenko.ejson4s.hint.FullTypeHints
+import me.apanasenko.ejson4s.utils.ClazzUtils
 
 /**
  * @author apanasenko

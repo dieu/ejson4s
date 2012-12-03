@@ -1,4 +1,4 @@
-package me.apanasenko.json.utils
+package me.apanasenko.ejson4s.utils
 
 import java.lang.reflect.Field
 

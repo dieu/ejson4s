@@ -1,10 +1,10 @@
-package me.apanasenko.json.deserializer
+package me.apanasenko.ejson4s.deserializer
 
 import util.parsing.json._
-import collection.{JavaConverters, Map, Iterable}
-import me.apanasenko.json.hint.FullTypeHints
-import me.apanasenko.json.{TypeHints, Deserializer}
-import me.apanasenko.json.transform.Transformer.as
+import collection.{Map, Iterable}
+import me.apanasenko.ejson4s.hint.FullTypeHints
+import me.apanasenko.ejson4s.{TypeHints, Deserializer}
+import me.apanasenko.ejson4s.transform.Transformer.as
 
 /**
  * @author apanasenko
