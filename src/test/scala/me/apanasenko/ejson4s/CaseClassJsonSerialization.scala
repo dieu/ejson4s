@@ -1,6 +1,7 @@
 package me.apanasenko.ejson4s
 
 import deserializer.JsonDeserializer
+import hint.FullTypeHints
 import org.scalatest.matchers.ShouldMatchers
 import serializer.JsonSerializer
 import org.scalatest.Spec
@@ -53,7 +54,7 @@ class CaseClassJsonSerialization extends Spec with ShouldMatchers {
     val serializer = new JsonSerializer()
 
     val fullyComplex = ComplexClass("test", Some("1"), List(Simple(), Simple()), Map("1" -> Simple(), "2" -> List("1", "2")))
-    val fullyComplexWithNone = ComplexClass("test", None, List(Simple(), Simple()), Map("1" -> Simple(), "2" -> List("1", "2")))
+    val fullyComplexWithNull = ComplexClass("test", Some(null), List(Simple(), Simple()), Map("1" -> Simple(), "2" -> List("1", "2")))
 
     case class InnerClass(test: String = "value")
 
@@ -73,6 +74,15 @@ class CaseClassJsonSerialization extends Spec with ShouldMatchers {
 
     it("fully complex case class deserialization") {
       deserializer.asObject(serializer.toString(fullyComplex)) should equal(fullyComplex)
+    }
+
+    it("fully complex case class with nulll deserialization") {
+      val hint = new FullTypeHints() {
+        override def insteadOfNone = "None"
+      }
+      val deserializer = new JsonDeserializer(hint)
+      val serializer = new JsonSerializer(hint)
+      deserializer.asObject(serializer.toString(fullyComplexWithNull)) should equal(fullyComplexWithNull)
     }
 
     it("strong case class deserialization") {

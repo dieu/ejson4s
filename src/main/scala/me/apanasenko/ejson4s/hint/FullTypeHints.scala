@@ -13,5 +13,5 @@ case class FullTypeHints() extends TypeHints {
 
   def isHint(clazz: Class[_]) = true
 
-  def insteadOfNone = null
+  def insteadOfNone: AnyRef = null
 }
